@@ -6,26 +6,33 @@ module.exports = function(grunt) {
     var object = {};
     var key;
    
-    glob.sync('*', {cwd: path}).forEach(function(option) {
-      key = option.replace(/\.js$/,'');
+    glob.sync("*", {cwd: path}).forEach(function(option) {
+      key = option.replace(/\.js$/, "");
       object[key] = require(path + option);
     });
    
     return object;
   }
+
+  function registerTasks(tasks) {
+    Object.keys(tasks).forEach(function(task) {
+      grunt.registerTask(task, tasks[task]);  
+    });
+  }
   
   var config = {
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: grunt.file.readJSON("package.json"),
+    settings: grunt.file.readJSON("./grunt/settings.json"),
     env: process.env
   };
    
-  grunt.util._.extend(config, loadConfig('./tasks/options/'));
+  grunt.util._.extend(config, loadConfig("./grunt/tasks/options/"));
    
   grunt.initConfig(config);
 
-  // load all grunt tasks matching the `grunt-*` pattern
-  require('load-grunt-tasks')(grunt);
-  
-  grunt.registerTask('default', ['bower', 'requirejs', 'size_report']);
+  grunt.loadTasks("./grunt/tasks");
 
+  require("load-grunt-tasks")(grunt);
+  
+  registerTasks(config.settings.tasks);
 };

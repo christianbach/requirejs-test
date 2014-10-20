@@ -1,0 +1,46 @@
+{
+  
+	"distDir": "dist",
+	"rootDir" : "./",
+	"requirejs": {
+		"configFile": "scripts/config.js",
+		"baseUrl": "scripts/",
+		"deps": ["main-prod"],
+		"dists": {
+			"modern": {
+				"output": "main.js",
+				"map": {},
+				"shim": {},
+				"include": []
+			},
+			"legacy": {
+				"output": "main-legacy.js",
+				"include": [
+					"es5-shim",
+					"es5-sham",
+					"respond"
+				],
+				"map": {
+					"*": {
+						"jquery": "jquery-legacy",
+						"jquery-legacy": "jquery-legacy"
+					}
+				},
+				"shim": {
+					"main-prod": {
+						"deps": ["respond", "es5-shim", "es5-sham"]
+					}
+				}
+			}
+		}
+	},
+	"patterns": {
+		"less": "less/**/*.less",
+  		"specs": "scripts/specs/**/*Spec.js",
+  		"requirejs": ["scripts/views/**/*.js"] 
+	},
+	"tasks": {
+		"default": ["bower", "build-dist", "size_report", "karma"],
+		"test": ["karma"]
+	}
+}

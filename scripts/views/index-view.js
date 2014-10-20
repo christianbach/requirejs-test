@@ -3,7 +3,7 @@ define(
 		"components/feedback",
     "components/carousel",
 	], 
-	function (feedback) {
+	function (feedback, carousel) {
   		
   		function init() {
   			console.log("index-view");

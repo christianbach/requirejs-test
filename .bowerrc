@@ -1,3 +1,4 @@
 {
-	"directory": "scripts/vendor"
+	"directory": "scripts/vendor",
+	"cwd": "./"
 }
